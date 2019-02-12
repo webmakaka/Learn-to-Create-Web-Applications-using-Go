@@ -1,0 +1,33 @@
+{{define "bootstrap"}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <link rel="icon" href="//getbootstrap.com/docs/3.4/favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//getbootstrap.com/docs/3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
+  </head>
+
+  <body>
+
+    <div class="container-fluid">
+
+      {{template "yield" .}}
+
+    </div>
+
+  <script src="//getbootstrap.com/docs/3.4/dist/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  </body>
+</html>
+
+{{end}}
