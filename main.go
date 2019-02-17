@@ -15,7 +15,6 @@ var (
 )
 
 func main() {
-
 	homeView = views.NewView("bootstrap", "views/home.gohtml")
 	contactView = views.NewView("bootstrap", "views/contact.gohtml")
 	usersC := controllers.NewUsers()

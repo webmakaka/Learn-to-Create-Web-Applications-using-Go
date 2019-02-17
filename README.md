@@ -6,10 +6,10 @@ calhoun.io
 
     $ docker run -i -t -p 3000:3000 marley/learn-to-create-web-applications-using-go
 
-\$ go get github.com/pilu/fresh  
-\$ fresh
+    \$ go get github.com/pilu/fresh
+    \$ fresh
 
-\$ go get github.com/gorilla/mux
+    \$ go get github.com/gorilla/mux
 
 ---
 
