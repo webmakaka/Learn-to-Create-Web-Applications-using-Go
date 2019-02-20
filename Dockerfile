@@ -4,6 +4,7 @@ RUN mkdir -p /project
 WORKDIR /project
 
 RUN go get github.com/gorilla/mux
+RUN go get github.com/gorilla/schema
 
 COPY . .
 
