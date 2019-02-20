@@ -13,8 +13,8 @@ func main() {
 	usersC := controllers.NewUsers()
 
 	r := mux.NewRouter()
-	r.Handle("/", staticC.HomeView).Methods("GET")
-	r.Handle("/contact", staticC.ContactView).Methods("GET")
+	r.Handle("/", staticC.Home).Methods("GET")
+	r.Handle("/contact", staticC.Contact).Methods("GET")
 
 	r.HandleFunc("/signup", usersC.New).Methods("GET")
 	r.HandleFunc("/signup", usersC.Create).Methods("POST")
