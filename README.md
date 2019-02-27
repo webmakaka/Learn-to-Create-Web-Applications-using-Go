@@ -11,7 +11,24 @@ calhoun.io
 
     \$ go get github.com/gorilla/mux
 
+<br/>
 
+### lesson56
+
+http://pgweb-demo.herokuapp.com/
+
+    CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        name TEXT,
+        email TEXT NOT NULL
+    );
+
+    CREATE TABLE orders (
+        id SERIAL PRIMARY KEY,
+        user_id INT NOT NULL,
+        amount INT,
+        description TEXT
+    )
 
 ---
 
