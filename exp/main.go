@@ -27,7 +27,18 @@ func main() {
 	}
 
 	defer us.Close()
-	// us.DestructiveReset()
+
+	// Delete Database
+	// 	us.DestructiveReset()
+
+	// user := models.User{
+	// 	Name:  "Michael Scott",
+	// 	Email: "michae@example.com",
+	// }
+
+	// if err := us.Create(&user); err != nil {
+	// 	panic(err)
+	// }
 
 	user, err := us.ByID(1)
 	if err != nil {

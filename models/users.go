@@ -48,6 +48,10 @@ func (us *UserService) ByID(id uint) (*User, error) {
 	}
 }
 
+func (us *UserService) Create(user *User) error {
+	return us.db.Create(user).Error
+}
+
 func (us *UserService) Close() error {
 	return us.db.Close()
 }
