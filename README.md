@@ -30,6 +30,11 @@ http://pgweb-demo.herokuapp.com/
         description TEXT
     )
 
+### lesson70
+
+    $ cd models
+    $ go test .
+
 ---
 
 **Marley**
