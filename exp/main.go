@@ -29,20 +29,24 @@ func main() {
 	defer us.Close()
 
 	// Delete Database
-	// 	us.DestructiveReset()
+	us.DestructiveReset()
 
-	// user := models.User{
-	// 	Name:  "Michael Scott",
-	// 	Email: "michae@example.com",
-	// }
+	user := models.User{
+		Name:  "Michael Scott",
+		Email: "michael@example.com",
+	}
 
-	// if err := us.Create(&user); err != nil {
-	// 	panic(err)
-	// }
+	if err := us.Create(&user); err != nil {
+		panic(err)
+	}
 
-	user, err := us.ByID(1)
+	if err := us.Delete(user.ID); err != nil {
+		panic(err)
+	}
+
+	userById, err := us.ByID(user.ID)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(user)
+	fmt.Println(userById)
 }
