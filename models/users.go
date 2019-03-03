@@ -5,6 +5,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 var (
@@ -12,14 +14,18 @@ var (
 	ErrInvalidID  = errors.New("models: ID provided was invalid")
 )
 
+const userPwPepper = "secret-random-string"
+
 type UserService struct {
 	db *gorm.DB
 }
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string `gorm:"not null;uniqueindex"`
+	Name         string
+	Email        string `gorm:"not null;uniqueindex"`
+	Password     string `gorm:"-"`
+	PasswordHash string `gorm:"not null"`
 }
 
 func NewUserService(connectionInfo string) (*UserService, error) {
@@ -59,6 +65,16 @@ func first(db *gorm.DB, dst interface{}) error {
 }
 
 func (us *UserService) Create(user *User) error {
+	pwBytes := []byte(user.Password + userPwPepper)
+	hashedBytes, err := bcrypt.GenerateFromPassword(pwBytes, bcrypt.DefaultCost)
+
+	if err != nil {
+		return err
+	}
+
+	user.PasswordHash = string(hashedBytes)
+	user.Password = ""
+
 	return us.db.Create(user).Error
 }
 
