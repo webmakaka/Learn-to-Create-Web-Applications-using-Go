@@ -36,7 +36,14 @@ type UserDB interface {
 	DestructiveReset() error
 }
 
-type UserService struct {
+type UserService interface {
+	Authenticate(email, passowrd string) (*User, error)
+	UserDB
+}
+
+var _ UserService = &userService{}
+
+type userService struct {
 	UserDB
 }
 
@@ -46,6 +53,8 @@ type userGorm struct {
 	db   *gorm.DB
 	hmac hash.HMAC
 }
+
+var _ UserDB = &userValidator{}
 
 type userValidator struct {
 	UserDB
@@ -61,25 +70,18 @@ type User struct {
 	RememberHash string `gorm:"not null;unique_index"`
 }
 
-func NewUserService(connectionInfo string) (*UserService, error) {
+func NewUserService(connectionInfo string) (UserService, error) {
 
 	ug, err := newUserGorm(connectionInfo)
 	if err != nil {
 		return nil, err
 	}
 
-	return &UserService{
+	return &userService{
 		UserDB: &userValidator{
 			UserDB: ug,
 		},
 	}, nil
-}
-
-func (uv *userValidator) ByID(id uint) (*User, error) {
-	if id <= 0 {
-		return nil, errors.New("Invalid id")
-	}
-	return uv.UserDB.ByID(id)
 }
 
 func newUserGorm(connectionInfo string) (*userGorm, error) {
@@ -124,7 +126,7 @@ func (ug *userGorm) ByRemember(token string) (*User, error) {
 	return &user, err
 }
 
-func (us *UserService) Authenticate(email, password string) (*User, error) {
+func (us *userService) Authenticate(email, password string) (*User, error) {
 	foundUser, err := us.ByEmail(email)
 	if err != nil {
 		return nil, err
