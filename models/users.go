@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"strings"
 
 	"../hash"
 	"../rand"
@@ -71,6 +72,18 @@ type userValidator struct {
 	hmac hash.HMAC
 }
 
+func (uv *userValidator) ByEmail(email string) (*User, error) {
+	user := User{
+		Email: email,
+	}
+
+	if err := runUserValFuncs(&user, uv.normalizeEmail); err != nil {
+		return nil, err
+	}
+
+	return uv.UserDB.ByEmail(user.Email)
+}
+
 type User struct {
 	gorm.Model
 	Name         string
@@ -97,7 +110,11 @@ func (uv *userValidator) ByRemember(token string) (*User, error) {
 }
 
 func (uv *userValidator) Create(user *User) error {
-	err := runUserValFuncs(user, uv.bcryptPassword, uv.setRememberIfUnset, uv.hmacRemember)
+	err := runUserValFuncs(user,
+		uv.bcryptPassword,
+		uv.setRememberIfUnset,
+		uv.hmacRemember,
+		uv.normalizeEmail)
 	if err != nil {
 		return err
 	}
@@ -106,7 +123,10 @@ func (uv *userValidator) Create(user *User) error {
 }
 
 func (uv *userValidator) Update(user *User) error {
-	err := runUserValFuncs(user, uv.bcryptPassword, uv.hmacRemember)
+	err := runUserValFuncs(user,
+		uv.bcryptPassword,
+		uv.hmacRemember,
+		uv.normalizeEmail)
 	if err != nil {
 		return err
 	}
@@ -174,6 +194,12 @@ func (uv *userValidator) idGreaterThan(n uint) userValFunc {
 
 		return nil
 	})
+}
+
+func (uv *userValidator) normalizeEmail(user *User) error {
+	user.Email = strings.ToLower(user.Email)
+	user.Email = strings.TrimSpace(user.Email)
+	return nil
 }
 
 func NewUserService(connectionInfo string) (UserService, error) {
