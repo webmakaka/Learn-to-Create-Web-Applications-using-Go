@@ -21,6 +21,7 @@ var (
 
 	ErrEmailRequired = errors.New("models: email address is required!")
 	ErrEmailInvalid  = errors.New("models: email address is not valid!")
+	ErrEmailTaken    = errors.New("models: email address is already taken")
 )
 
 const userPwPepper = "secret-random-string"
@@ -129,7 +130,8 @@ func (uv *userValidator) Create(user *User) error {
 		uv.hmacRemember,
 		uv.normalizeEmail,
 		uv.requireEmail,
-		uv.emailFormat)
+		uv.emailFormat,
+		uv.emailIsAvail)
 	if err != nil {
 		return err
 	}
@@ -143,7 +145,8 @@ func (uv *userValidator) Update(user *User) error {
 		uv.hmacRemember,
 		uv.normalizeEmail,
 		uv.requireEmail,
-		uv.emailFormat)
+		uv.emailFormat,
+		uv.emailIsAvail)
 	if err != nil {
 		return err
 	}
@@ -235,6 +238,24 @@ func (uv *userValidator) emailFormat(user *User) error {
 	return nil
 }
 
+func (uv *userValidator) emailIsAvail(user *User) error {
+	existing, err := uv.ByEmail(user.Email)
+
+	if err == ErrNotFound {
+		return nil
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if user.ID != existing.ID {
+		return ErrEmailTaken
+	}
+
+	return nil
+}
+
 func NewUserService(connectionInfo string) (UserService, error) {
 
 	ug, err := newUserGorm(connectionInfo)
@@ -243,11 +264,7 @@ func NewUserService(connectionInfo string) (UserService, error) {
 	}
 
 	hmac := hash.NewHMAC(hmacSecretKey)
-	uv := &userValidator{
-		hmac:   hmac,
-		UserDB: ug,
-	}
-
+	uv := newUserValidator(ug, hmac)
 	return &userService{
 		UserDB: uv,
 	}, nil
