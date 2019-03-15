@@ -24,7 +24,20 @@ func NewUsers(us models.UserService) *Users {
 }
 
 func (u *Users) New(w http.ResponseWriter, r *http.Request) {
-	u.NewView.Render(w, nil)
+
+	type Alert struct {
+		Level   string
+		Message string
+	}
+
+	a := Alert{
+		Level:   "warning",
+		Message: "Successfully rendered a dynamic alert",
+	}
+
+	if err := u.NewView.Render(w, a); err != nil {
+		panic(err)
+	}
 }
 
 type SignupForm struct {
