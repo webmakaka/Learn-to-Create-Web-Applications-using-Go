@@ -277,18 +277,13 @@ func (uv *userValidator) emailIsAvail(user *User) error {
 	return nil
 }
 
-func NewUserService(connectionInfo string) (UserService, error) {
-
-	ug, err := newUserGorm(connectionInfo)
-	if err != nil {
-		return nil, err
-	}
-
+func NewUserService(db *gorm.DB) UserService {
+	ug := &userGorm{db}
 	hmac := hash.NewHMAC(hmacSecretKey)
 	uv := newUserValidator(ug, hmac)
 	return &userService{
 		UserDB: uv,
-	}, nil
+	}
 }
 
 func (uv *userValidator) passwordMinLight(user *User) error {
@@ -314,18 +309,6 @@ func (uv *userValidator) passwordHashRequired(user *User) error {
 		return ErrPasswordRequired
 	}
 	return nil
-}
-
-func newUserGorm(connectionInfo string) (*userGorm, error) {
-	db, err := gorm.Open("postgres", connectionInfo)
-	if err != nil {
-		return nil, err
-	}
-
-	db.LogMode(true)
-	return &userGorm{
-		db: db,
-	}, nil
 }
 
 func (ug *userGorm) ByID(id uint) (*User, error) {
