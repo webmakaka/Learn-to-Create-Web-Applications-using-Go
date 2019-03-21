@@ -27,7 +27,6 @@ func main() {
 
 	must(err)
 
-	// TODO: Fix this
 	defer services.Close()
 	// services.DestructiveReset()
 	services.AutoMigrate()
