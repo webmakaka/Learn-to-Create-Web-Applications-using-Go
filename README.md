@@ -30,10 +30,18 @@ http://pgweb-demo.herokuapp.com/
         description TEXT
     )
 
+<br/>
+
 ### lesson70
 
     $ cd models
     $ go test .
+
+<br/>
+
+### lesson 120
+
+http://localhost:3000/galleries/new
 
 ---
 
