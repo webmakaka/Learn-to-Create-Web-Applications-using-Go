@@ -3,8 +3,8 @@ package middleware
 import (
 	"fmt"
 	"net/http"
-	"time"
 
+	"../context"
 	"../models"
 )
 
@@ -18,10 +18,6 @@ func (mw *RequireUser) Apply(next http.Handler) http.HandlerFunc {
 
 func (mw *RequireUser) ApplyFn(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
-		t := time.Now()
-
-		fmt.Println("Request started at: ", t)
 
 		cookie, err := r.Cookie("remember_token")
 
@@ -37,9 +33,12 @@ func (mw *RequireUser) ApplyFn(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
+		ctx := r.Context()
+		ctx = context.WithUser(ctx, user)
+		r = r.WithContext(ctx)
+
 		fmt.Println("User found: ", user)
 
 		next(w, r)
-		fmt.Println("Request ended at: ", time.Since(t))
 	})
 }
