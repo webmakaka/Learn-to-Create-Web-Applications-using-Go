@@ -102,8 +102,20 @@ func (g *Galleries) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	gallery.Title = form.Title
-	fmt.Fprintln(w, gallery)
-	// g.EditView.Render(w, vd)
+
+	err = g.gs.Update(gallery)
+	if err != nil {
+		vd.SetAlert(err)
+		g.EditView.Render(w, vd)
+		return
+	}
+
+	vd.Alert = &views.Alert{
+		Level:   views.AlertLvlSuccess,
+		Message: "Gallery successfully updated!",
+	}
+
+	g.EditView.Render(w, vd)
 }
 
 // POST /galleries/
