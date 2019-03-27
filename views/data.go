@@ -1,5 +1,11 @@
 package views
 
+import (
+	"fmt"
+
+	"../models"
+)
+
 const (
 	AlertLvlError   = "danger"
 	AlertLvlWarning = "warning"
@@ -16,10 +22,14 @@ type Alert struct {
 
 type Data struct {
 	Alert *Alert
+	User  *models.User
 	Yield interface{}
 }
 
 func (d *Data) SetAlert(err error) {
+
+	fmt.Println("Error: ", err)
+
 	if pErr, ok := err.(PublicError); ok {
 		d.Alert = &Alert{
 			Level:   AlertLvlError,

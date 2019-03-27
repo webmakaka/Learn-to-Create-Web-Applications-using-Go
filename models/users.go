@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -85,7 +86,7 @@ func (uv *userValidator) ByEmail(email string) (*User, error) {
 type User struct {
 	gorm.Model
 	Name         string
-	Email        string `gorm:"not null;uniqueindex"`
+	Email        string `gorm:"not null;unique_index"`
 	Password     string `gorm:"-"`
 	PasswordHash string `gorm:"not null"`
 	Remember     string `gorm:"-"`
@@ -108,9 +109,18 @@ func (uv *userValidator) ByRemember(token string) (*User, error) {
 }
 
 func (uv *userValidator) Create(user *User) error {
+
+	fmt.Printf("user ")
+	fmt.Println(user)
+	fmt.Printf("/user ")
+	fmt.Printf("")
+	fmt.Printf("uv ")
+	fmt.Println(uv)
+	fmt.Printf("/uv ")
+
 	err := runUserValFuncs(user,
 		uv.passwordRequired,
-		uv.passwordMinLight,
+		uv.passwordMinLength,
 		uv.bcryptPassword,
 		uv.passwordHashRequired,
 		uv.setRememberIfUnset,
@@ -130,7 +140,7 @@ func (uv *userValidator) Create(user *User) error {
 
 func (uv *userValidator) Update(user *User) error {
 	err := runUserValFuncs(user,
-		uv.passwordMinLight,
+		uv.passwordMinLength,
 		uv.bcryptPassword,
 		uv.passwordHashRequired,
 		uv.rememberMinBytes,
@@ -185,7 +195,7 @@ func (uv *userValidator) hmacRemember(user *User) error {
 
 func (uv *userValidator) setRememberIfUnset(user *User) error {
 
-	if user.Remember == "" {
+	if user.Remember != "" {
 		return nil
 	}
 
@@ -281,7 +291,7 @@ func NewUserService(db *gorm.DB) UserService {
 	}
 }
 
-func (uv *userValidator) passwordMinLight(user *User) error {
+func (uv *userValidator) passwordMinLength(user *User) error {
 	if user.Password == "" {
 		return nil
 	}
