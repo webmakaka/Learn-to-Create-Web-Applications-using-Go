@@ -2,6 +2,7 @@ package views
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 
 	"../models"
@@ -24,6 +25,7 @@ type Alert struct {
 type Data struct {
 	Alert *Alert
 	User  *models.User
+	CSRF  template.HTML
 	Yield interface{}
 }
 

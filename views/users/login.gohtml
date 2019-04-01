@@ -3,7 +3,6 @@
 <div class="row">
   <div class="col-md-4 offset-md-4">
   
-  
     <div class="alert alert-primary" role="alert">
         {{template "loginForm"}}
     </div>
@@ -20,6 +19,7 @@
   <form action="/login" method="POST">
 
   <div class="form-group">
+    {{csrfField}}
     <label for="email">Email address</label>
     <input type="email" name="Email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
