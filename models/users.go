@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -109,15 +108,6 @@ func (uv *userValidator) ByRemember(token string) (*User, error) {
 }
 
 func (uv *userValidator) Create(user *User) error {
-
-	fmt.Printf("user ")
-	fmt.Println(user)
-	fmt.Printf("/user ")
-	fmt.Printf("")
-	fmt.Printf("uv ")
-	fmt.Println(uv)
-	fmt.Printf("/uv ")
-
 	err := runUserValFuncs(user,
 		uv.passwordRequired,
 		uv.passwordMinLength,
