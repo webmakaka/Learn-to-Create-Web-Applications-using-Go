@@ -53,7 +53,7 @@ http://github.com/gorilla/csrf
 
 <br/>
 
-### lesson 140: CSRF
+### lesson 144: Function options for services
 
     $ go run main.go config.go
 

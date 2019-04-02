@@ -1,0 +1,14 @@
+{
+"port": "3000",
+"env": "dev",
+"pepper": "secret-random-string",
+"hmac_key": "secret-hmac-key",
+"database": {
+  "host": "ec2-23-23-184-76.compute-1.amazonaws.com",
+  "post": "5432",
+  "user": "hrgcmhzjkgllyf",
+  "password": "f867d132e78e27e50a27d0b7522dbf3f44dc835c903eb3040d74ecd5daf5c633",
+  "name": "d61hvpjfrp6em7",
+  "sslmode": "require"
+  }
+}
