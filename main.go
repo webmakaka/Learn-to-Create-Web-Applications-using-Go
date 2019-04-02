@@ -13,20 +13,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const (
-	host     = "ec2-23-23-184-76.compute-1.amazonaws.com"
-	port     = 5432
-	user     = "hrgcmhzjkgllyf"
-	password = "f867d132e78e27e50a27d0b7522dbf3f44dc835c903eb3040d74ecd5daf5c633"
-	dbname   = "d61hvpjfrp6em7"
-	sslmode  = "require"
-)
-
 func main() {
-
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, sslmode)
-
-	services, err := models.NewServices(psqlInfo)
+	cfg := DefaultConfig()
+	dbCfg := DefaultPostgresConfig()
+	services, err := models.NewServices(
+		models.WithGorm(dbCfg.Dialect(), dbCfg.ConnectionInfo()),
+		models.WithLogMode(!cfg.IsProd()),
+		models.WithUser(cfg.Pepper, cfg.HMACKey),
+		models.WithGallery(),
+		models.WithImage(),
+	)
 
 	must(err)
 
@@ -39,11 +35,10 @@ func main() {
 	usersC := controllers.NewUsers(services.User)
 	galleriesC := controllers.NewGalleries(services.Gallery, services.Image, r)
 
-	// TODO: Update this to be a config variable
-	isProd := false
 	b, err := rand.Bytes(32)
 	must(err)
-	csrfMw := csrf.Protect(b, csrf.Secure(isProd))
+
+	csrfMw := csrf.Protect(b, csrf.Secure(cfg.IsProd()))
 
 	userMw := middleware.User{
 		UserService: services.User,
@@ -89,7 +84,8 @@ func main() {
 
 	r.HandleFunc("/galleries/{id:[0-9]+}/delete", requireUserMw.ApplyFn(galleriesC.Delete)).Methods("POST")
 
-	http.ListenAndServe(":3000", csrfMw(userMw.Apply(r)))
+	fmt.Printf("Startign the serveron :%d... \n", cfg.Port)
+	http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), csrfMw(userMw.Apply(r)))
 }
 
 func must(err error) {
