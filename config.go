@@ -57,7 +57,7 @@ func DefaultConfig() Config {
 }
 
 func LoadConfig(configReg bool) Config {
-	f, err := os.Open("./config.json")
+	f, err := os.Open("./.config.json")
 	if err != nil {
 		if configReg {
 			panic(err)
