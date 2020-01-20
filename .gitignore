@@ -63,6 +63,6 @@ builds/**/images/*
 lenslocked.com
 images/**
 
-.config
+#.config
 notes/**
 .vscode/**

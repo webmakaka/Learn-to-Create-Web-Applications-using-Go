@@ -57,7 +57,8 @@ func DefaultConfig() Config {
 }
 
 func LoadConfig(configReg bool) Config {
-	f, err := os.Open("./.config.json")
+	f, err := os.Open("./config.json")
+
 	if err != nil {
 		if configReg {
 			panic(err)
@@ -65,8 +66,11 @@ func LoadConfig(configReg bool) Config {
 		fmt.Println("Useing the default config...")
 		return DefaultConfig()
 	}
+
 	var c Config
 	dec := json.NewDecoder(f)
+	fmt.Println(dec)
+
 	err = dec.Decode(&c)
 
 	if err != nil {
