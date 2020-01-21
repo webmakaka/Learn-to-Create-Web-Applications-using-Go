@@ -61,10 +61,12 @@ http://github.com/gorilla/csrf
 
 ### Run inside docker container
 
+<br/>
+
 ```
 $ docker run -it \
     -p 80:3000 \
-    techhead/react-practice-course-project2
+    techhead/learn-to-create-web-applications-using-go
 ```
 
 
