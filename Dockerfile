@@ -10,6 +10,6 @@ RUN go get -u github.com/jinzhu/gorm
 RUN go get -u golang.org/x/crypto/bcrypt
 RUN go get -u github.com/gorilla/csrf
 
-COPY . .
+COPY ./app ./
 
-CMD ["go", "run", "main.go config.go"]
+CMD ["go", "run", "main.go", "config.go"]
