@@ -1,21 +1,41 @@
 # Learn to Create Web Applications using Go [2018, ENG]
 
+**Author:**  
 calhoun.io
 
 ---
 
-    $ docker run -i -t -p 3000:3000 marley/learn-to-create-web-applications-using-go
 
-    \$ go get github.com/pilu/fresh
-    \$ fresh
+<br/>
 
-    \$ go get github.com/gorilla/mux
+## Run current version inside docker container
+
+<br/>
+
+```
+$ docker run -it \
+    -p 80:3000 \
+    techhead/learn-to-create-web-applications-using-go
+```
+
+<br/>
+
+## Development
+
+<!--
+```
+$ go get github.com/pilu/fresh
+$ fresh
+```
+-->
 
 <br/>
 
 ### lesson56
 
 http://pgweb-demo.herokuapp.com/
+
+<br/>
 
     CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -57,21 +77,7 @@ http://github.com/gorilla/csrf
 
     $ go run main.go config.go
 
-<br/>
-
-### Run inside docker container
-
-<br/>
-
-```
-$ docker run -it \
-    -p 80:3000 \
-    techhead/learn-to-create-web-applications-using-go
-```
-
-
 ---
 
 **Marley**
 
-<a href="https://marley.org">marley.org</a>
