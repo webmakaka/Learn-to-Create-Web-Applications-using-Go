@@ -57,6 +57,17 @@ http://github.com/gorilla/csrf
 
     $ go run main.go config.go
 
+<br/>
+
+### Run inside docker container
+
+```
+$ docker run -it \
+    -p 80:3000 \
+    techhead/react-practice-course-project2
+```
+
+
 ---
 
 **Marley**

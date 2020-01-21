@@ -12,4 +12,4 @@ RUN go get -u github.com/gorilla/csrf
 
 COPY . .
 
-CMD ["go", "run", "main.go"]
+CMD ["go", "run", "main.go config.go"]
