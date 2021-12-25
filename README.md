@@ -18,6 +18,8 @@ $ docker run -it \
     techhead/learn-to-create-web-applications-using-go
 ```
 
+http://localhost/
+
 <br/>
 
 ## Development
