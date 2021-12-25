@@ -1,7 +1,6 @@
 FROM golang:1.11.5
 
-RUN mkdir -p /project
-WORKDIR /project
+WORKDIR /app
 
 RUN go get -u github.com/gorilla/mux
 RUN go get -u github.com/gorilla/schema
