@@ -25,12 +25,12 @@ func (c PostgresConfig) Dialect() string {
 
 func DefaultPostgresConfig() PostgresConfig {
 	return PostgresConfig{
-		Host:     "ec2-23-23-184-76.compute-1.amazonaws.com",
+		Host:     "golang-web-demo-postgres",
 		Port:     5432,
-		User:     "hrgcmhzjkgllyf",
-		Password: "f867d132e78e27e50a27d0b7522dbf3f44dc835c903eb3040d74ecd5daf5c633",
-		Name:     "d61hvpjfrp6em7",
-		SSLmode:  "require",
+		User:     "user1",
+		Password: "pA55w0rd1",
+		Name:     "golang-web-demo",
+		SSLmode:  "disable",
 	}
 }
 

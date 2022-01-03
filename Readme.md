@@ -10,47 +10,57 @@ calhoun.io
 
 ## Run current version inside docker container
 
-<br/>
 
 ```
-$ docker run -it \
-    -p 80:3000 \
-    techhead/learn-to-create-web-applications-using-go
+$ docker-compose up --build
 ```
-
-http://localhost/
 
 <br/>
 
-## Development
-
-<!--
-```
-$ go get github.com/pilu/fresh
-$ fresh
-```
--->
+http://localhost:3000/
 
 <br/>
 
-### lesson56
-
-http://pgweb-demo.herokuapp.com/
+```
+// Create Tables
+// pass pA55w0rd1
+$ psql -U user1 -h localhost -p 5432 -d golang-web-demo
+```
 
 <br/>
 
-    CREATE TABLE users (
-        id SERIAL PRIMARY KEY,
-        name TEXT,
-        email TEXT NOT NULL
-    );
+### Development
 
-    CREATE TABLE orders (
-        id SERIAL PRIMARY KEY,
-        user_id INT NOT NULL,
-        amount INT,
-        description TEXT
-    )
+
+<br/>
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT NOT NULL
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    amount INT,
+    description TEXT
+);
+```
+
+<br/>
+
+```
+golang-web-demo=# \dt
+        List of relations
+ Schema |  Name  | Type  | Owner 
+--------+--------+-------+-------
+ public | orders | table | user1
+ public | users  | table | user1
+(2 rows)
+```
+
 
 <br/>
 
