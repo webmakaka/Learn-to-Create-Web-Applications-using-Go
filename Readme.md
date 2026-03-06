@@ -66,8 +66,10 @@ golang-web-demo=# \dt
 
 ### lesson70
 
-    $ cd models
-    $ go test .
+```
+$ cd models
+$ go test .
+```
 
 <br/>
 
@@ -81,22 +83,25 @@ http://localhost:3000/galleries/new
 
 http://github.com/gorilla/csrf
 
-    $ go get github.com/gorilla/csrf
+```
+$ go get github.com/gorilla/csrf
+```
 
 <br/>
 
 ### lesson 144: Function options for services
 
-    $ go run main.go config.go
+```
+$ go run main.go config.go
+```
 
 
-<br/>
+
+<br/><br/>
 
 ---
 
 <br/>
 
-**Marley**
-
-Any questions in english: <a href="https://jsdev.org/chat/">Telegram Chat</a>  
-Любые вопросы на русском: <a href="https://jsdev.ru/chat/">Телеграм чат</a>
+**Marley**  
+<a href="https://k8s.ru/">Предложить инженеру работу / подработку на проекте с kubernetes, microservices, golang</a>
